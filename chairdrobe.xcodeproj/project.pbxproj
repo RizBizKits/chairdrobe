@@ -1,0 +1,282 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		227AEC4A235B447389781530 /* ChairdrobeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A6A30A123A49568F27565B /* ChairdrobeApp.swift */; };
+		60328D00310F4125878CF7F7 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7A4295EBBE4B13AB0A45C8 /* Brand.swift */; };
+		05D4F2A584D94AF9814B781F /* Bookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6473EB2D9274AE9AFE23156 /* Bookmark.swift */; };
+		C29D5D955B3F49868B2730F0 /* BookmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1FC15C89664B609F7242F2 /* BookmarkStore.swift */; };
+		C4337F9EACC440CB92825D46 /* StatusItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74BC33DBDAF4F71A7D2AEB9 /* StatusItemController.swift */; };
+		CF75D145ABC147CAB2AB1203 /* MetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608E5A7DD85A4C4D840A0C4C /* MetadataService.swift */; };
+		93A3276F0B4B4ACA94A4BD3C /* BookmarkPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299F93BEC2C9499F9A5A2D2D /* BookmarkPopoverView.swift */; };
+		4B27535DEB3D455A90CE303A /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CB9DD21317411383540EC7 /* BookmarkListView.swift */; };
+		7D0D6C0CB4424011A2FEBB75 /* EditBookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F970067CC654AE9A1DF2DF2 /* EditBookmarkView.swift */; };
+		84917467DD844C509379C648 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC45DDAA097A49E7BD8CFB91 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		57A6A30A123A49568F27565B /* ChairdrobeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChairdrobeApp.swift; sourceTree = "<group>"; };
+		7A7A4295EBBE4B13AB0A45C8 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
+		D6473EB2D9274AE9AFE23156 /* Bookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bookmark.swift; sourceTree = "<group>"; };
+		AF1FC15C89664B609F7242F2 /* BookmarkStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkStore.swift; sourceTree = "<group>"; };
+		F74BC33DBDAF4F71A7D2AEB9 /* StatusItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusItemController.swift; sourceTree = "<group>"; };
+		608E5A7DD85A4C4D840A0C4C /* MetadataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataService.swift; sourceTree = "<group>"; };
+		299F93BEC2C9499F9A5A2D2D /* BookmarkPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkPopoverView.swift; sourceTree = "<group>"; };
+		A8CB9DD21317411383540EC7 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
+		9F970067CC654AE9A1DF2DF2 /* EditBookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBookmarkView.swift; sourceTree = "<group>"; };
+		AC45DDAA097A49E7BD8CFB91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		32F1EFDA008A4D218B6A2E8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9680838A39D74378BD470392 /* chairdrobe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = chairdrobe.entitlements; sourceTree = "<group>"; };
+		729F6D9430DA4EABB3ABADD0 /* chairdrobe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chairdrobe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A8AE0523653B43628DFC3880 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2F76C7CB01A5480C93939BC5 = {
+			isa = PBXGroup;
+			children = (
+				2CF2FFAC2A9C4697B3B2669D /* chairdrobe */,
+				D5EC618B253F45EBBF2BE9E8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D5EC618B253F45EBBF2BE9E8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				729F6D9430DA4EABB3ABADD0 /* chairdrobe.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2CF2FFAC2A9C4697B3B2669D /* chairdrobe */ = {
+			isa = PBXGroup;
+			children = (
+				57A6A30A123A49568F27565B /* ChairdrobeApp.swift */,
+				7A7A4295EBBE4B13AB0A45C8 /* Brand.swift */,
+				D6473EB2D9274AE9AFE23156 /* Bookmark.swift */,
+				AF1FC15C89664B609F7242F2 /* BookmarkStore.swift */,
+				F74BC33DBDAF4F71A7D2AEB9 /* StatusItemController.swift */,
+				8E3A63BDE3E94993B641BC1C /* Services */,
+				3D9FF000486A4104A3CAA5C2 /* Views */,
+				AC45DDAA097A49E7BD8CFB91 /* Assets.xcassets */,
+				32F1EFDA008A4D218B6A2E8A /* Info.plist */,
+				9680838A39D74378BD470392 /* chairdrobe.entitlements */,
+			);
+			path = chairdrobe;
+			sourceTree = "<group>";
+		};
+		8E3A63BDE3E94993B641BC1C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				608E5A7DD85A4C4D840A0C4C /* MetadataService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		3D9FF000486A4104A3CAA5C2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				299F93BEC2C9499F9A5A2D2D /* BookmarkPopoverView.swift */,
+				A8CB9DD21317411383540EC7 /* BookmarkListView.swift */,
+				9F970067CC654AE9A1DF2DF2 /* EditBookmarkView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		37F1754BC7BB4BF590645016 /* chairdrobe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A4EAF0C83444C54B9113DEA /* Build configuration list for PBXNativeTarget "chairdrobe" */;
+			buildPhases = (
+				BC8960A6854B44EB976B133B /* Sources */,
+				A8AE0523653B43628DFC3880 /* Frameworks */,
+				99A506AA7AF846D28A954DED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = chairdrobe;
+			productName = chairdrobe;
+			productReference = 729F6D9430DA4EABB3ABADD0 /* chairdrobe.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C0B9C77CF89144FEA5E7C3C4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+			};
+			buildConfigurationList = 3447E41FEC8E497AA6F9B12E /* Build configuration list for PBXProject "chairdrobe" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2F76C7CB01A5480C93939BC5;
+			productRefGroup = D5EC618B253F45EBBF2BE9E8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				37F1754BC7BB4BF590645016 /* chairdrobe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		99A506AA7AF846D28A954DED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84917467DD844C509379C648 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BC8960A6854B44EB976B133B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				227AEC4A235B447389781530 /* ChairdrobeApp.swift in Sources */,
+				60328D00310F4125878CF7F7 /* Brand.swift in Sources */,
+				05D4F2A584D94AF9814B781F /* Bookmark.swift in Sources */,
+				C29D5D955B3F49868B2730F0 /* BookmarkStore.swift in Sources */,
+				C4337F9EACC440CB92825D46 /* StatusItemController.swift in Sources */,
+				CF75D145ABC147CAB2AB1203 /* MetadataService.swift in Sources */,
+				93A3276F0B4B4ACA94A4BD3C /* BookmarkPopoverView.swift in Sources */,
+				4B27535DEB3D455A90CE303A /* BookmarkListView.swift in Sources */,
+				7D0D6C0CB4424011A2FEBB75 /* EditBookmarkView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		276ECB73939E4119AEE3BB90 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_DYNAMIC_NO_PIC = NO;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C55737ACB3E24F93A2D501CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		6EC6C3DE7F304157AC0825A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = chairdrobe/chairdrobe.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = chairdrobe/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chairdrobe.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		1C55C76448834976AF9B818E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = chairdrobe/chairdrobe.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = chairdrobe/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chairdrobe.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3447E41FEC8E497AA6F9B12E /* Build configuration list for PBXProject "chairdrobe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				276ECB73939E4119AEE3BB90 /* Debug */,
+				C55737ACB3E24F93A2D501CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A4EAF0C83444C54B9113DEA /* Build configuration list for PBXNativeTarget "chairdrobe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EC6C3DE7F304157AC0825A0 /* Debug */,
+				1C55C76448834976AF9B818E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C0B9C77CF89144FEA5E7C3C4 /* Project object */;
+}

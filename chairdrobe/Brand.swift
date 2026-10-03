@@ -11,7 +11,7 @@ enum Brand {
     static let rowSelected = Color.white.opacity(0.14)
     static let danger = Color(red: 1.0, green: 0.35, blue: 0.35)
 
-    static let popoverWidth: CGFloat = 320
+    static let popoverWidth: CGFloat = 360
     static let listPopoverHeight: CGFloat = 420
     static let editPopoverHeight: CGFloat = 360
 

@@ -169,6 +169,11 @@ struct ChairCoverView: View {
                 }
                 .accessibilityHidden(true)
 
+                ShirtStackView(count: count)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                    .padding(.bottom, 22)
+                    .allowsHitTesting(false)
+
                 Image("LogoType")
                     .resizable()
                     .scaledToFit()
@@ -194,6 +199,8 @@ struct ChairCoverView: View {
                         Text(count > 0 ? "your pile of" : "your pile of links")
                             .font(.system(size: 14, weight: .bold))
                             .foregroundStyle(Brand.textPrimary)
+                            .lineLimit(1)
+                            .fixedSize(horizontal: true, vertical: false)
 
                         if count > 0 {
                             Button(countLabel, action: onOpenPile)
@@ -204,9 +211,11 @@ struct ChairCoverView: View {
                                 .padding(.vertical, 1)
                                 .background(Brand.neonGreen)
                                 .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+                                .fixedSize()
                                 .accessibilityLabel("Open \(countLabel)")
                         }
                     }
+                    .layoutPriority(1)
 
                     if count == 0 {
                         Text(feedback?.compactText ?? "Drag a link onto the menu bar chair to start.")
@@ -240,5 +249,27 @@ struct ChairCoverView: View {
         }
         .background(Brand.blue)
         .clipped()
+    }
+}
+
+/// Folded shirts stacked on the seat. One more shirt per link, up to a cap.
+private struct ShirtStackView: View {
+    var count: Int
+
+    private static let shirts = ["ShirtWhite", "ShirtGreen", "ShirtBlack", "ShirtBlue"]
+
+    private var shown: Int { min(max(count, 0), 6) }
+
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            ForEach(0..<shown, id: \.self) { index in
+                Image(Self.shirts[index % Self.shirts.count])
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 192)
+                    .offset(y: -CGFloat(index) * 20)
+            }
+        }
+        .accessibilityLabel("\(shown) shirts on the chair")
     }
 }

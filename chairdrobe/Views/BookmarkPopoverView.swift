@@ -6,9 +6,6 @@ struct BookmarkPopoverView: View {
     var onQuit: () -> Void
     var onPreferredSizeChange: (CGSize) -> Void = { _ in }
 
-    // TEST ONLY — delete before pushing. Overrides the cover count without saving links.
-    @State private var testCount: Int?
-
     private var preferredSize: CGSize {
         if store.showingList, store.editingID != nil {
             return CGSize(width: Brand.popoverWidth, height: Brand.editPopoverHeight)
@@ -25,20 +22,11 @@ struct BookmarkPopoverView: View {
                 populatedBody
             } else {
                 ChairCoverView(
-                    count: testCount ?? store.bookmarks.count,
+                    count: store.bookmarks.count,
                     feedback: store.feedback,
                     onOpenPile: { store.openPile() },
                     onQuit: onQuit
                 )
-                .overlay(alignment: .topTrailing) {
-                    TestCountStepper(
-                        count: testCount ?? store.bookmarks.count,
-                        onStep: { delta in
-                            let current = testCount ?? store.bookmarks.count
-                            testCount = max(0, current + delta)
-                        }
-                    )
-                }
             }
         }
         .frame(width: preferredSize.width, height: preferredSize.height)
@@ -355,42 +343,5 @@ private struct ShirtStackView: View {
         n &*= 0x846ca68b
         n ^= n >> 16
         return Int(n)
-    }
-}
-
-/// TEST ONLY — delete before pushing. Steps the cover count without saving links.
-private struct TestCountStepper: View {
-    var count: Int
-    var onStep: (Int) -> Void
-
-    var body: some View {
-        HStack(spacing: 6) {
-            stepButton("−", delta: -1)
-            Text("\(count)")
-                .font(.system(size: 12, weight: .bold, design: .monospaced))
-                .foregroundStyle(Brand.textPrimary)
-                .frame(minWidth: 18)
-            stepButton("+", delta: 1)
-        }
-        .padding(.horizontal, 6)
-        .padding(.vertical, 4)
-        .background(Brand.blue)
-        .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 6, style: .continuous)
-                .strokeBorder(Brand.neonGreen, lineWidth: 1)
-        }
-        .padding(8)
-        .accessibilityLabel("Test link count")
-    }
-
-    private func stepButton(_ title: String, delta: Int) -> some View {
-        Button(title) { onStep(delta) }
-            .buttonStyle(.plain)
-            .font(.system(size: 14, weight: .bold))
-            .foregroundStyle(Color.black)
-            .frame(width: 18, height: 18)
-            .background(Brand.neonGreen)
-            .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
     }
 }

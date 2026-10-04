@@ -6,6 +6,9 @@ struct BookmarkPopoverView: View {
     var onQuit: () -> Void
     var onPreferredSizeChange: (CGSize) -> Void = { _ in }
 
+    // TEST ONLY — delete before pushing. Overrides the cover count without saving links.
+    @State private var testCount: Int?
+
     private var preferredSize: CGSize {
         if store.showingList, store.editingID != nil {
             return CGSize(width: Brand.popoverWidth, height: Brand.editPopoverHeight)
@@ -22,11 +25,20 @@ struct BookmarkPopoverView: View {
                 populatedBody
             } else {
                 ChairCoverView(
-                    count: store.bookmarks.count,
+                    count: testCount ?? store.bookmarks.count,
                     feedback: store.feedback,
                     onOpenPile: { store.openPile() },
                     onQuit: onQuit
                 )
+                .overlay(alignment: .topTrailing) {
+                    TestCountStepper(
+                        count: testCount ?? store.bookmarks.count,
+                        onStep: { delta in
+                            let current = testCount ?? store.bookmarks.count
+                            testCount = max(0, current + delta)
+                        }
+                    )
+                }
             }
         }
         .frame(width: preferredSize.width, height: preferredSize.height)
@@ -171,7 +183,7 @@ struct ChairCoverView: View {
 
                 ShirtStackView(count: count)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-                    .padding(.bottom, 22)
+                    .padding(.bottom, 10)
                     .allowsHitTesting(false)
 
                 Image("LogoType")
@@ -252,24 +264,133 @@ struct ChairCoverView: View {
     }
 }
 
-/// Folded shirts stacked on the seat. One more shirt per link, up to a cap.
+/// Clothes dropped on the seat. Each link adds a garment that lies on the pile.
+/// Color, side, and neck direction are scrambled per shirt so the stack does not tile.
 private struct ShirtStackView: View {
     var count: Int
 
-    private static let shirts = ["ShirtWhite", "ShirtGreen", "ShirtBlack", "ShirtBlue"]
+    private struct Garment {
+        let asset: String
+        let width: CGFloat
+        let family: Int
+    }
 
-    private var shown: Int { min(max(count, 0), 6) }
+    private struct Placed {
+        let asset: String
+        let width: CGFloat
+        let x: CGFloat
+        let rise: CGFloat
+        let degrees: Double
+    }
+
+    private static let garments: [Garment] = [
+        Garment(asset: "RumpleWhite", width: 176, family: 0),
+        Garment(asset: "RumpleGreen", width: 168, family: 1),
+        Garment(asset: "RumpleBlack", width: 160, family: 2),
+        Garment(asset: "RumpleWad", width: 150, family: 0),
+        Garment(asset: "RumpleWhiteB", width: 158, family: 0),
+        Garment(asset: "RumpleGreenB", width: 146, family: 1),
+        Garment(asset: "RumpleBlackB", width: 154, family: 2),
+        Garment(asset: "RumpleWadB", width: 142, family: 0),
+        Garment(asset: "RumpleYellow", width: 176, family: 3),
+        Garment(asset: "RumpleYellowB", width: 150, family: 3),
+    ]
+
+    private var shown: Int { max(count, 0) }
 
     var body: some View {
         ZStack(alignment: .bottom) {
             ForEach(0..<shown, id: \.self) { index in
-                Image(Self.shirts[index % Self.shirts.count])
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 192)
-                    .offset(y: -CGFloat(index) * 20)
+                let placed = Self.placed(at: index)
+                ZStack(alignment: .bottom) {
+                    shirt(placed)
+                        .colorMultiply(.black)
+                        .offset(x: placed.x, y: -placed.rise + 6)
+                    shirt(placed)
+                        .offset(x: placed.x, y: -placed.rise)
+                }
             }
         }
-        .accessibilityLabel("\(shown) shirts on the chair")
+        .accessibilityLabel("\(shown) pieces of clothing on the chair")
+    }
+
+    private func shirt(_ placed: Placed) -> some View {
+        Image(placed.asset)
+            .resizable()
+            .scaledToFit()
+            .frame(width: placed.width * 1.3)
+            .rotationEffect(.degrees(placed.degrees))
+    }
+
+    /// Stable for a given shirt index. Early shirts spread across the seat.
+    /// Later ones tuck toward the middle and rise slowly, so the pile stays a hill.
+    private static func placed(at index: Int) -> Placed {
+        var previousFamily = -1
+        var pick = 0
+        for step in 0...index {
+            pick = mix(step, 1) % garments.count
+            var tries = 0
+            while garments[pick].family == previousFamily && tries < garments.count {
+                pick = (pick + 1) % garments.count
+                tries += 1
+            }
+            if step == index { break }
+            previousFamily = garments[pick].family
+        }
+        let garment = garments[pick]
+        let spread = 52 / (1 + 0.14 * CGFloat(index))
+        let side: CGFloat = mix(index, 4).isMultiple(of: 2) ? -1 : 1
+        let jitter = CGFloat(mix(index, 6) % 15) - 7
+        let x = index == 0 ? jitter * 0.35 : side * spread + jitter
+        let rise = 7.5 * sqrt(CGFloat(index))
+        let degrees = mix(index, 5).isMultiple(of: 2) ? 0.0 : 180.0
+        return Placed(asset: garment.asset, width: garment.width, x: x, rise: rise, degrees: degrees)
+    }
+
+    private static func mix(_ index: Int, _ salt: Int) -> Int {
+        var n = UInt32(bitPattern: Int32(truncatingIfNeeded: index &* 2_246_822_519 &+ salt &* 3_266_489_917 &+ 1))
+        n ^= n >> 16
+        n &*= 0x7feb352d
+        n ^= n >> 15
+        n &*= 0x846ca68b
+        n ^= n >> 16
+        return Int(n)
+    }
+}
+
+/// TEST ONLY — delete before pushing. Steps the cover count without saving links.
+private struct TestCountStepper: View {
+    var count: Int
+    var onStep: (Int) -> Void
+
+    var body: some View {
+        HStack(spacing: 6) {
+            stepButton("−", delta: -1)
+            Text("\(count)")
+                .font(.system(size: 12, weight: .bold, design: .monospaced))
+                .foregroundStyle(Brand.textPrimary)
+                .frame(minWidth: 18)
+            stepButton("+", delta: 1)
+        }
+        .padding(.horizontal, 6)
+        .padding(.vertical, 4)
+        .background(Brand.blue)
+        .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                .strokeBorder(Brand.neonGreen, lineWidth: 1)
+        }
+        .padding(8)
+        .accessibilityLabel("Test link count")
+    }
+
+    private func stepButton(_ title: String, delta: Int) -> some View {
+        Button(title) { onStep(delta) }
+            .buttonStyle(.plain)
+            .font(.system(size: 14, weight: .bold))
+            .foregroundStyle(Color.black)
+            .frame(width: 18, height: 18)
+            .background(Brand.neonGreen)
+            .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
     }
 }

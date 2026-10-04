@@ -45,7 +45,22 @@ Placeholder menu bar icon is a simplified chair template. Empty state uses the f
 
 ## Screenshots
 
-Add submission screenshots under `docs/screenshots/`:
+Empty chair.
 
-- empty pile
-- populated collection with previews
+![Empty chair](docs/screenshots/empty-pile.png)
+
+A small pile.
+
+![Cover with 3 links](docs/screenshots/pile-3-links.png)
+
+The list, with title, favicon, and description.
+
+![Bookmark list](docs/screenshots/populated-list.png)
+
+Edit a bookmark.
+
+![Edit bookmark](docs/screenshots/edit-bookmark.png)
+
+A bigger pile.
+
+![Cover with 16 links](docs/screenshots/pile-16-links.png)

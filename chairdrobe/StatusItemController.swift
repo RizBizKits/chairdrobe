@@ -7,6 +7,7 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
     private let popover = NSPopover()
     private let store: BookmarkStore
     private let dropView: StatusItemDropView
+    private var menuIcon: NSImage?
     private var iconFlashWork: DispatchWorkItem?
     private var keyMonitor: Any?
 
@@ -24,7 +25,7 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
             self?.handleDroppedStrings(strings)
         }
 
-        statusItem.view = dropView
+        installMenuBarButton()
 
         popover.behavior = .transient
         popover.animates = true
@@ -52,13 +53,24 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
         if let image = NSImage(named: "MenuBarIcon") {
             image.isTemplate = true
             image.size = NSSize(width: 18, height: 18)
-            dropView.icon = image
+            menuIcon = image
         } else {
             let fallback = NSImage(systemSymbolName: "link.circle", accessibilityDescription: "chairdrobe")
             fallback?.isTemplate = true
-            dropView.icon = fallback
+            menuIcon = fallback
         }
-        dropView.toolTip = "chairdrobe — drop a link to save it"
+    }
+
+    /// The system button draws a template image white on a black bar and black on a light bar.
+    /// The drop view only receives clicks and drags, so it does not paint a black icon on top.
+    private func installMenuBarButton() {
+        guard let button = statusItem.button else { return }
+        button.image = menuIcon
+        button.imagePosition = .imageOnly
+        button.toolTip = "chairdrobe — drop a link to save it"
+        dropView.frame = button.bounds
+        dropView.autoresizingMask = [.width, .height]
+        button.addSubview(dropView)
     }
 
     func togglePopover() {
@@ -72,7 +84,8 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
     func showPopover() {
         NSApp.activate(ignoringOtherApps: true)
         let alreadyOpen = popover.isShown
-        popover.show(relativeTo: dropView.bounds, of: dropView, preferredEdge: .minY)
+        let anchor = statusItem.button ?? dropView
+        popover.show(relativeTo: anchor.bounds, of: anchor, preferredEdge: .minY)
         dropView.isHighlighted = true
         if !alreadyOpen {
             store.showingList = false
@@ -246,9 +259,12 @@ final class StatusItemController: NSObject, NSPopoverDelegate {
 
     private func flashIcon(title: String) {
         iconFlashWork?.cancel()
+        statusItem.button?.image = nil
         dropView.flashTitle = title
         let work = DispatchWorkItem { [weak self] in
-            self?.dropView.flashTitle = nil
+            guard let self else { return }
+            self.dropView.flashTitle = nil
+            self.statusItem.button?.image = self.menuIcon
         }
         iconFlashWork = work
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.4, execute: work)
@@ -268,7 +284,6 @@ final class KeyableHostingController<Content: View>: NSHostingController<Content
 final class StatusItemDropView: NSView {
     var onClick: (() -> Void)?
     var onDropStrings: (([String]) -> Void)?
-    var icon: NSImage? { didSet { needsDisplay = true } }
     var flashTitle: String? { didSet { needsDisplay = true } }
     var isHighlighted = false { didSet { needsDisplay = true } }
 
@@ -287,6 +302,13 @@ final class StatusItemDropView: NSView {
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        if let superview {
+            frame = superview.bounds
+        }
+    }
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         if isHighlighted {
@@ -295,9 +317,11 @@ final class StatusItemDropView: NSView {
         }
 
         if let flashTitle {
+            let appearance = superview?.effectiveAppearance ?? effectiveAppearance
+            let dark = appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
             let attrs: [NSAttributedString.Key: Any] = [
                 .font: NSFont.systemFont(ofSize: 9, weight: .semibold),
-                .foregroundColor: NSColor.labelColor
+                .foregroundColor: dark ? NSColor.white : NSColor.black
             ]
             let size = (flashTitle as NSString).size(withAttributes: attrs)
             let origin = NSPoint(
@@ -305,23 +329,7 @@ final class StatusItemDropView: NSView {
                 y: (bounds.height - size.height) / 2
             )
             (flashTitle as NSString).draw(at: origin, withAttributes: attrs)
-            return
         }
-
-        guard let icon else { return }
-        let iconSize = NSSize(width: 18, height: 18)
-        let origin = NSPoint(
-            x: (bounds.width - iconSize.width) / 2,
-            y: (bounds.height - iconSize.height) / 2
-        )
-        icon.draw(
-            in: NSRect(origin: origin, size: iconSize),
-            from: .zero,
-            operation: .sourceOver,
-            fraction: 1,
-            respectFlipped: true,
-            hints: [.interpolation: NSImageInterpolation.high]
-        )
     }
 
     override func mouseDown(with event: NSEvent) {

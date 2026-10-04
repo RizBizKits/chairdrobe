@@ -1,5 +1,9 @@
 # chairdrobe
 
+<p align="center">
+  <img src="docs/screenshots/brand.png" alt="chairdrobe, your pile of links" width="480">
+</p>
+
 When your chair is more wardrobe than a chair, with a pile of clothes tossed onto it, it becomes a **chairdrobe**. And because art imitates life, you can now toss bookmarks to your chairdrobe, too.
 
 ## Requirements
